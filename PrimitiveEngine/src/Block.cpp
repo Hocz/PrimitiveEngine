@@ -1,0 +1,19 @@
+#include "Block.h"
+
+Block::Block(glm::vec2 position) 
+	: Actor(position, glm::vec2(16))
+{
+
+}
+
+void Block::Render()
+{
+	Actor::Render();
+}
+
+void Block::Hit(int damage)
+{
+	// health check
+
+	Destroy();
+}
