@@ -192,6 +192,11 @@ void Game::FillRenderRect(int x, int y, int width, int height)
     SDL_RenderFillRect(renderer, &rect);
 }
 
+Actor* Game::GetCollidingActor(Actor* other, ECollision_Type collisionType)
+{
+    return nullptr;
+}
+
 
 Actor* Game::GetPlayer()
 {

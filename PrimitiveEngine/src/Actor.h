@@ -2,6 +2,15 @@
 
 #include "glm.hpp"
 
+enum class ECollision_Type
+{
+	None,
+	Player,
+	Enemy,
+	Block,
+	Item,
+};
+
 class Actor {
 
 public:
@@ -20,6 +29,8 @@ public:
 
 	glm::vec2 position;
 	glm::vec2 size = glm::vec2(32);
+
+	ECollision_Type collisionType = ECollision_Type::None;
 
 private:
 

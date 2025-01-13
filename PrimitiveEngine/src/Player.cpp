@@ -8,7 +8,7 @@
 Player::Player(glm::vec2 position)
 	: Actor(position, glm::vec2(16))
 {
-
+	collisionType = ECollision_Type::Player;
 }
 
 void Player::Update()

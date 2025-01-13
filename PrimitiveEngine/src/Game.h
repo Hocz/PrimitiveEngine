@@ -36,6 +36,8 @@ public:
 	void SetRenderColor();
 	void FillRenderRect(int x, int y, int width, int height);
 
+	Actor* GetCollidingActor(Actor* other, ECollision_Type collisionType);
+
 	// getter functions
 	Actor* GetPlayer();
 	Camera* GetCamera();
