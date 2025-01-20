@@ -32,7 +32,13 @@ public:
 
 	ECollision_Type collisionType = ECollision_Type::None;
 
-private:
+	virtual void SetIsJumping();
+	virtual void SetIsGrounded();
+
+protected:
 
 	bool isDestroyed = false;
+
+	bool isJumping = false;
+	bool isGrounded = false;
 };

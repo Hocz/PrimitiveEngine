@@ -3,11 +3,15 @@
 #include <iostream>
 #include "SDL_image.h"
 #include <SDL.h>
+
+#define NOMINMAX
 #include <windows.h>
 
+static constexpr int max_Actors = 50;
 
 // Forward declarations
 class Actor;
+enum class ECollision_Type;
 class Camera;
 class InputManager;
 class WorldGenerator;
@@ -53,6 +57,9 @@ private:
 
 	static constexpr float BACKGROUND_GRID_SIZE = 50.f;
 
+	Actor* actors[max_Actors] = { nullptr };
+
+
 	WorldGenerator* worldGenerator = nullptr;
 
 	InputManager* inputManager = nullptr;
@@ -64,6 +71,7 @@ private:
 };
 
 extern Game* game;
+
 
 // game time
 float Get_DeltaTime();

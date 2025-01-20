@@ -4,7 +4,7 @@
 #include "glm.hpp"
 #include "InputManager.h"
 #include "WorldGenerator.h"
-
+#include "AABB.h"
 
 SDL_Texture* playerTex;
 SDL_Rect srcR, destR;
@@ -26,7 +26,9 @@ Game::Game()
     
     inputManager = new InputManager();
 
-    player = new Player(glm::vec2(0, 0));
+    actors[0] = new Player(glm::vec2(10, -10));
+    player = actors[0];
+
 
     camera = new Camera();
 }
@@ -113,6 +115,20 @@ void Game::Update()
         player->Update();
     }
 
+    for (int x = 0; x < worldGenerator->WORLD_WIDTH; x++)
+    {
+        for (int y = 0; y < worldGenerator->WORLD_HEIGHT; y++)
+        {
+            Block* block = worldGenerator->worldGrid[x][y];
+
+            if (block != nullptr)
+            {
+                block->Update();
+            }
+        }
+    }
+
+
     camera->Update();
 
     // last thing in update
@@ -192,8 +208,29 @@ void Game::FillRenderRect(int x, int y, int width, int height)
     SDL_RenderFillRect(renderer, &rect);
 }
 
+
 Actor* Game::GetCollidingActor(Actor* other, ECollision_Type collisionType)
 {
+    for (int i = 0; i < max_Actors; i++)
+    {
+        if (actors[i] == other)
+            continue;
+
+        if (actors[i] == nullptr)
+            continue;
+
+        if (actors[i]->collisionType != collisionType)
+            continue;
+
+        AABB a = AABB::FromPositionSize(other->position, other->size);
+        AABB b = AABB::FromPositionSize(actors[i]->position, actors[i]->size);
+
+        if (aabbOverlap(a, b))
+        {
+            return actors[i];
+        }
+    }
+    
     return nullptr;
 }
 
@@ -217,7 +254,6 @@ WorldGenerator* Game::GetWorldGenerator()
 {
     return worldGenerator;
 }
-
 
 
 float Get_DeltaTime()

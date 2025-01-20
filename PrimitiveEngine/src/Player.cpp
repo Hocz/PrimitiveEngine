@@ -13,20 +13,9 @@ Player::Player(glm::vec2 position)
 
 void Player::Update()
 {
-	glm::vec2 input = glm::vec2(0);
-
-	if (game->GetInputManager()->KeyDown(Key::W))
-		input.y -= 1.f;
-	if (game->GetInputManager()->KeyDown(Key::S))
-		input.y += 1.f;
-	if (game->GetInputManager()->KeyDown(Key::D))
-		input.x += 1.f;
-	if (game->GetInputManager()->KeyDown(Key::A))
-		input.x -= 1.f;
-
-	glm::normalize(input);
-	position += input * 250.f * Get_DeltaTime();
-
+	Player::HandleMovement();
+	Player::HandleGravity();
+	Player::HandleJump();
 
 	if (game->GetInputManager()->MouseButtonPressed(MouseButton::Left))
 	{
@@ -45,6 +34,58 @@ void Player::Hit(int damage)
 	// health check
 
 	Destroy();
+}
+
+void Player::HandleMovement()
+{
+	glm::vec2 input = glm::vec2(0);
+
+	if (game->GetInputManager()->KeyDown(Key::D)) // Right
+	{
+		input.x = movementSpeed;
+	}
+	if (game->GetInputManager()->KeyDown(Key::A)) // Left
+	{
+		input.x = -movementSpeed;
+	}
+
+	glm::normalize(input);
+
+
+	movementDirection.x = input.x;
+	movementDirection.y = input.y;
+
+	position += movementDirection * Get_DeltaTime();
+}
+
+void Player::HandleGravity()
+{
+	if (isGrounded && velocity < 0.0f)
+	{ 
+		velocity = 10.0f;
+	}
+	else
+	{
+		velocity += gravity * Get_DeltaTime();
+		std::cout << "Falling!" << std::endl;
+	}
+
+	movementDirection.y = velocity;
+}
+
+void Player::HandleJump()
+{
+	if (game->GetInputManager()->KeyPressed(Key::Space) && isGrounded)
+	{
+		velocity -= jumpStrength;
+		
+		isGrounded = false;
+		isJumping = true;
+
+		std::cout << "Jumping!" << std::endl;
+	}
+
+	movementDirection.y = velocity;
 }
 
 void Player::BreakBlockAtPos()
@@ -76,3 +117,4 @@ void Player::BreakBlockAtPos()
 	}
 
 }
+
