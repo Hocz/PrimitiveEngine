@@ -26,7 +26,7 @@ Game::Game()
     
     inputManager = new InputManager();
 
-    actors[0] = new Player(glm::vec2(10, -10));
+    actors[0] = new Player(glm::vec2(16, -32));
     player = actors[0];
 
 
@@ -209,20 +209,17 @@ void Game::FillRenderRect(int x, int y, int width, int height)
 }
 
 
-Actor* Game::GetCollidingActor(Actor* other, ECollision_Type collisionType)
+Actor* Game::GetCollidingActor(Actor* actor, ECollision_Type collisionType)
 {
     for (int i = 0; i < max_Actors; i++)
     {
-        if (actors[i] == other)
-            continue;
-
-        if (actors[i] == nullptr)
+        if (actors[i] == actor || actors[i] == nullptr)
             continue;
 
         if (actors[i]->collisionType != collisionType)
             continue;
 
-        AABB a = AABB::FromPositionSize(other->position, other->size);
+        AABB a = AABB::FromPositionSize(actor->position, actor->size);
         AABB b = AABB::FromPositionSize(actors[i]->position, actors[i]->size);
 
         if (aabbOverlap(a, b))
@@ -232,6 +229,30 @@ Actor* Game::GetCollidingActor(Actor* other, ECollision_Type collisionType)
     }
     
     return nullptr;
+}
+
+std::vector<Actor*> Game::GetAllCollidingActors(Actor* actor, ECollision_Type collisionType)
+{
+    std::vector<Actor*> collidingActors;
+
+    for (int i = 0; i < max_Actors; i++)
+    {
+        if (actors[i] == actor || actors[i] == nullptr)
+            continue;
+
+        if (actors[i]->collisionType != collisionType)
+            continue;
+
+        AABB a = AABB::FromPositionSize(actor->position, actor->size);
+        AABB b = AABB::FromPositionSize(actors[i]->position, actors[i]->size);
+
+        if (aabbOverlap(a, b))
+        {
+            collidingActors.push_back(actors[i]);
+        }
+    }
+
+    return collidingActors;
 }
 
 

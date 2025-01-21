@@ -14,8 +14,8 @@ Player::Player(glm::vec2 position)
 void Player::Update()
 {
 	Player::HandleMovement();
-	Player::HandleGravity();
-	Player::HandleJump();
+	//Player::HandleGravity();
+	//Player::HandleJump();
 
 	if (game->GetInputManager()->MouseButtonPressed(MouseButton::Left))
 	{
@@ -40,6 +40,15 @@ void Player::HandleMovement()
 {
 	glm::vec2 input = glm::vec2(0);
 
+	if (game->GetInputManager()->KeyDown(Key::W)) // Up
+	{
+		input.y = -movementSpeed;
+	}
+	if (game->GetInputManager()->KeyDown(Key::S)) // Down
+	{
+		input.y = movementSpeed;
+	}
+
 	if (game->GetInputManager()->KeyDown(Key::D)) // Right
 	{
 		input.x = movementSpeed;
@@ -51,7 +60,6 @@ void Player::HandleMovement()
 
 	glm::normalize(input);
 
-
 	movementDirection.x = input.x;
 	movementDirection.y = input.y;
 
@@ -60,7 +68,26 @@ void Player::HandleMovement()
 
 void Player::HandleGravity()
 {
-	if (isGrounded && velocity < 0.0f)
+	std::vector<Actor*> collidingActors = game->GetAllCollidingActors(this, ECollision_Type::Block);
+	std::vector<AABB> actorsAABB;
+
+	AABB player = AABB::FromPositionSize(this->position, this->size);
+
+	for (Actor* a : collidingActors)
+	{
+		actorsAABB.push_back(AABB::FromPositionSize(a->position, a->size));
+	}
+
+	if (!IsGrounded(player, actorsAABB, 0.1f))
+	{
+		// apply gravity over time
+	}
+	else
+	{
+		// velocity.y = 0; - stop falling
+	}
+
+	/*if (isGrounded && velocity < 0.0f)
 	{ 
 		velocity = 10.0f;
 	}
@@ -70,7 +97,7 @@ void Player::HandleGravity()
 		std::cout << "Falling!" << std::endl;
 	}
 
-	movementDirection.y = velocity;
+	movementDirection.y = velocity;*/
 }
 
 void Player::HandleJump()
@@ -86,6 +113,23 @@ void Player::HandleJump()
 	}
 
 	movementDirection.y = velocity;
+}
+
+bool Player::IsGrounded(const AABB& actor, const std::vector<AABB>& collidingActors, float extendedAmount = 0.1f)
+{
+	// extends collision detection to below actor
+	AABB extendedActor = actor;
+	extendedActor.min.y -= extendedAmount;
+	extendedActor.max.y = actor.min.y;
+	
+	for (const auto& a : collidingActors)
+	{
+		if (aabbOverlap(extendedActor, a))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void Player::BreakBlockAtPos()

@@ -17,6 +17,7 @@ public:
 	void HandleGravity();
 	void HandleJump();
 
+	bool IsGrounded(const AABB& actor, const std::vector<AABB>& collidingActors, float extendedAmount) override;
 
 	void BreakBlockAtPos();
 

@@ -1,10 +1,12 @@
 #pragma once
 
-#include "glm.hpp"
+#include "AABB.h"
+#include <vector>
 
 enum class ECollision_Type
 {
 	None,
+	Everything,
 	Player,
 	Enemy,
 	Block,
@@ -32,13 +34,18 @@ public:
 
 	ECollision_Type collisionType = ECollision_Type::None;
 
-	virtual void SetIsJumping();
-	virtual void SetIsGrounded();
+
+	virtual bool IsColliding(const AABB& a, const AABB& b, glm::vec2& outOverlap) { return false; }
+	virtual void ResolveCollision(Actor* actor, const AABB& other) { }
+
+	virtual bool IsGrounded(const AABB& actor, const std::vector<AABB>& collidingActors, float extendedAmount) { return false; }
+
+	virtual void SetIsGrounded(bool state) { isGrounded = state; }
+	virtual void SetVelocity(float value) { }
 
 protected:
 
 	bool isDestroyed = false;
 
-	bool isJumping = false;
 	bool isGrounded = false;
 };

@@ -11,8 +11,8 @@ AABB AABB::FromPositionSize(glm::vec2 position, glm::vec2 size)
 bool aabbOverlap(AABB a, AABB b)
 {
     return 
-        a._max.x >= b._min.x && 
-        b._max.x >= a._min.x &&
-        a._max.y >= b._min.y && 
-        b._max.y >= a._min.y;
+        a.max.x >= b.min.x && 
+        b.max.x >= a.min.x &&
+        a.max.y >= b.min.y && 
+        b.max.y >= a.min.y;
 }

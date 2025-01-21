@@ -12,4 +12,8 @@ public:
 	void Render() override;
 
 	void Hit(int damage) override;
+
+	bool IsColliding(const AABB& a, const AABB& b, glm::vec2& outOverlap) override;
+
+	void ResolveCollision(Actor* actor, const AABB& other) override;
 };

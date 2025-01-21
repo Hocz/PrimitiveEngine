@@ -11,13 +11,3 @@ void Actor::Render()
 	game->FillRenderRect(renderPosition.x, renderPosition.y, size.x, size.y);
 }
 
-
-void Actor::SetIsJumping()
-{
-	isJumping = false;
-}
-
-void Actor::SetIsGrounded()
-{
-	isGrounded = true;
-}

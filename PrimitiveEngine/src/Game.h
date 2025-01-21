@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SDL_image.h"
 #include <SDL.h>
+#include <vector>
 
 #define NOMINMAX
 #include <windows.h>
@@ -41,6 +42,7 @@ public:
 	void FillRenderRect(int x, int y, int width, int height);
 
 	Actor* GetCollidingActor(Actor* other, ECollision_Type collisionType);
+	std::vector<Actor*> GetAllCollidingActors(Actor* other, ECollision_Type collisionType);
 
 	// getter functions
 	Actor* GetPlayer();
