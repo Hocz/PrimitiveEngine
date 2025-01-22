@@ -107,7 +107,6 @@ void Player::HandleJump()
 		velocity -= jumpStrength;
 		
 		isGrounded = false;
-		isJumping = true;
 
 		std::cout << "Jumping!" << std::endl;
 	}
