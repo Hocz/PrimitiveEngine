@@ -1,2 +1,10 @@
-﻿Player.obj : error LNK2001: unresolved external symbol "public: virtual void __cdecl Actor::SetIsJumping(void)" (?SetIsJumping@Actor@@UEAAXXZ)
-C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\x64\Debug\PrimitiveEngine.exe : fatal error LNK1120: 1 unresolved externals
+﻿  LINK : C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\x64\Debug\PrimitiveEngine.exe not found or not built by the last incremental link; performing full link
+WorldGenerator.obj : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+Game.obj : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+Camera.obj : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+SDL2.lib(SDL2.dll) : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+SDL2.lib(SDL2.dll) : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+LINK : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+kernel32.lib(KERNEL32.dll) : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+kernel32.lib(KERNEL32.dll) : warning LNK4020: a type record in '' is corrupted; some symbols and types may not be accessible from the debugger
+Block.obj : fatal error LNK1103: debugging information corrupt; recompile module
