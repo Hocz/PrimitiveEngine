@@ -1,2 +1,57 @@
-﻿  Player.cpp
-  PrimitiveEngine.vcxproj -> C:\Users\rasmus.goransson\Documents\GitHub\PrimitiveEngine\x64\Debug\PrimitiveEngine.exe
+﻿  AABB.cpp
+  Actor.cpp
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,71): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,71): warning C4244:         with
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,71): warning C4244:         [
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,71): warning C4244:             T=float
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,71): warning C4244:         ]
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,63): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,63): warning C4244:         with
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,63): warning C4244:         [
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,63): warning C4244:             T=float
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,63): warning C4244:         ]
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,55): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,55): warning C4244:         with
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,55): warning C4244:         [
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,55): warning C4244:             T=float
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,55): warning C4244:         ]
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,37): warning C4244: 'argument': conversion from 'T' to 'int', possible loss of data
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,37): warning C4244:         with
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,37): warning C4244:         [
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,37): warning C4244:             T=float
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Actor.cpp(11,37): warning C4244:         ]
+  Block.cpp
+  Camera.cpp
+  Game.cpp
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4838: conversion from 'T' to 'int' requires a narrowing conversion
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4838:         with
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4838:         [
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4838:             T=float
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4838:         ]
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4244:         with
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4244:         [
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4244:             T=float
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,39): warning C4244:         ]
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4838: conversion from 'T' to 'int' requires a narrowing conversion
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4838:         with
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4838:         [
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4838:             T=float
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4838:         ]
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4244:         with
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4244:         [
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4244:             T=float
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.cpp(161,51): warning C4244:         ]
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.h(60,48): warning C4838: conversion from 'const float' to 'int' requires a narrowing conversion
+  (compiling source file 'src/Game.cpp')
+  
+C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\PrimitiveEngine\src\Game.h(60,48): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+  (compiling source file 'src/Game.cpp')
+  
+  InputManager.cpp
+  main.cpp
+  Player.cpp
+  WorldGenerator.cpp
+  Generating Code...
+  PrimitiveEngine.vcxproj -> C:\Users\rasmu\OneDrive\Documents\GitHub\PrimitiveEngine\x64\Debug\PrimitiveEngine.exe
