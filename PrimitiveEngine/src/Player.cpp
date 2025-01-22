@@ -102,7 +102,8 @@ void Player::HandleGravity()
 
 void Player::HandleJump()
 {
-	if (game->GetInputManager()->KeyPressed(Key::Space) && isGrounded)
+	// OLD CODE
+	/*if (game->GetInputManager()->KeyPressed(Key::Space) && isGrounded)
 	{
 		velocity -= jumpStrength;
 		
@@ -111,7 +112,7 @@ void Player::HandleJump()
 		std::cout << "Jumping!" << std::endl;
 	}
 
-	movementDirection.y = velocity;
+	movementDirection.y = velocity;*/
 }
 
 bool Player::IsGrounded(const AABB& actor, const std::vector<AABB>& collidingActors, float extendedAmount = 0.1f)
