@@ -401,3 +401,18 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+PrimitiveEngine/x64/Debug/Actor.obj
+PrimitiveEngine/x64/Debug/Block.obj
+PrimitiveEngine/x64/Debug/Camera.obj
+PrimitiveEngine/x64/Debug/Game.obj
+PrimitiveEngine/x64/Debug/InputManager.obj
+PrimitiveEngine/x64/Debug/main.obj
+PrimitiveEngine/x64/Debug/PrimitiveEngine.log
+PrimitiveEngine/x64/Debug/PrimitiveEngine.tlog/CL.command.1.tlog
+PrimitiveEngine/x64/Debug/PrimitiveEngine.tlog/CL.read.1.tlog
+PrimitiveEngine/x64/Debug/PrimitiveEngine.tlog/CL.write.1.tlog
+PrimitiveEngine/x64/Debug/PrimitiveEngine.tlog/PrimitiveEngine.lastbuildstate
+PrimitiveEngine/x64/Debug/vc143.idb
+PrimitiveEngine/x64/Debug/vc143.pdb
+PrimitiveEngine/x64/Debug/WorldGenerator.obj
+x64/Debug/PrimitiveEngine.pdb
