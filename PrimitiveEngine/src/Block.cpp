@@ -71,20 +71,18 @@ void Block::ResolveCollision(Actor* actor, const AABB& other)
 		{
 			actor->position.x += overlap.x; // adjust position right
 		}
-		// TODO: Set Actor Horizontal Velocity to 0 - (ex: velocity.x = 0)
+		actor->velocity.x = 0;
 	}
 	else
 	{
 		if (actor->position.y < other.min.y)
 		{
 			actor->position.y -= overlap.y; // adjust position down
-			//actor->SetIsGrounded(true); // AABB Expansion instead
 		}
 		else
 		{
 			actor->position.y += overlap.y; // adjust position up
 		}
-		// TODO: Set Actor Vertical Velocity to 0 - (ex: velocity.y = 0)
-
+		actor->velocity.y = 0;
 	}
 }

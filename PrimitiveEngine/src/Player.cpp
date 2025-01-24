@@ -6,7 +6,7 @@
 #include "WorldGenerator.h"
 
 Player::Player(glm::vec2 position)
-	: Actor(position, glm::vec2(16))
+	: Actor(position, glm::vec2(12))
 {
 	collisionType = ECollision_Type::Player;
 }
@@ -14,8 +14,8 @@ Player::Player(glm::vec2 position)
 void Player::Update()
 {
 	Player::HandleMovement();
-	//Player::HandleGravity();
-	//Player::HandleJump();
+	Player::HandleGravity();
+	Player::HandleJump();
 
 	if (game->GetInputManager()->MouseButtonPressed(MouseButton::Left))
 	{
@@ -27,6 +27,19 @@ void Player::Update()
 void Player::Render()
 {
 	Actor::Render();
+
+	glm::vec2 newPos = glm::vec2(position.x, position.y + (size.y * 0.5f));
+	glm::vec2 newSize = glm::vec2(size.x * 0.75, size.y * 0.5f);
+
+	AABB extendedActor = AABB::FromPositionSize(newPos, newSize);
+
+	int width = extendedActor.max.x - extendedActor.min.x;
+	int height = extendedActor.max.y - extendedActor.min.y;
+
+	glm::vec2 renderPosition = newPos - glm::vec2(width, height) * 0.5f;
+	renderPosition = game->GetCamera()->WorldToScreen(renderPosition);
+
+	game->RenderRect(renderPosition.x, renderPosition.y, width, height);
 }
 
 void Player::Hit(int damage)
@@ -38,30 +51,24 @@ void Player::Hit(int damage)
 
 void Player::HandleMovement()
 {
-	glm::vec2 input = glm::vec2(0);
-
-	if (game->GetInputManager()->KeyDown(Key::W)) // Up
-	{
-		input.y = -movementSpeed;
-	}
-	if (game->GetInputManager()->KeyDown(Key::S)) // Down
-	{
-		input.y = movementSpeed;
-	}
 
 	if (game->GetInputManager()->KeyDown(Key::D)) // Right
 	{
-		input.x = movementSpeed;
+		velocity.x += movementSpeed * Get_DeltaTime();
+		velocity.x = glm::clamp(velocity.x, 0.0f, maxMovementSpeeed);
 	}
-	if (game->GetInputManager()->KeyDown(Key::A)) // Left
+	else if (game->GetInputManager()->KeyDown(Key::A)) // Left
 	{
-		input.x = -movementSpeed;
+		velocity.x -= movementSpeed * Get_DeltaTime();
+		velocity.x = glm::clamp(velocity.x, -maxMovementSpeeed, 0.0f);
 	}
+	else
+	{
+		velocity.x = 0;
+	}
+	
 
-	glm::normalize(input);
-
-	movementDirection.x = input.x;
-	movementDirection.y = input.y;
+	movementDirection.x = velocity.x;
 
 	position += movementDirection * Get_DeltaTime();
 }
@@ -71,64 +78,56 @@ void Player::HandleGravity()
 	std::vector<Actor*> collidingActors = game->GetAllCollidingActors(this, ECollision_Type::Block);
 	std::vector<AABB> actorsAABB;
 
+	//std::cout << collidingActors.size() << std::endl;
+
 	AABB player = AABB::FromPositionSize(this->position, this->size);
 
 	for (Actor* a : collidingActors)
 	{
-		actorsAABB.push_back(AABB::FromPositionSize(a->position, a->size));
+		AABB aabb = AABB::FromPositionSize(a->position, a->size);
+		actorsAABB.push_back(aabb);
 	}
 
-	if (!IsGrounded(player, actorsAABB, 0.1f))
+	if (!IsGrounded(player, actorsAABB, 2.0f))
 	{
-		// apply gravity over time
+		velocity.y += gravity * Get_DeltaTime();
 	}
 	else
 	{
-		// velocity.y = 0; - stop falling
+		velocity.y = 0;
+		isGrounded = true;
+		isJumping = false;
 	}
 
-	/*if (isGrounded && velocity < 0.0f)
-	{ 
-		velocity = 10.0f;
-	}
-	else
-	{
-		velocity += gravity * Get_DeltaTime();
-		std::cout << "Falling!" << std::endl;
-	}
-
-	movementDirection.y = velocity;*/
+	movementDirection.y = velocity.y;
 }
 
 void Player::HandleJump()
-{
-	// OLD CODE
-	/*if (game->GetInputManager()->KeyPressed(Key::Space) && isGrounded)
+{	
+	if (game->GetInputManager()->KeyPressed(Key::Space) && isGrounded)
 	{
-		velocity -= jumpStrength;
-		
-		isGrounded = false;
-
-		std::cout << "Jumping!" << std::endl;
+		velocity.y -= jumpStrength;
 	}
 
-	movementDirection.y = velocity;*/
+	movementDirection.y = velocity.y;
 }
 
-bool Player::IsGrounded(const AABB& actor, const std::vector<AABB>& collidingActors, float extendedAmount = 0.1f)
+bool Player::IsGrounded(const AABB& actor, const std::vector<AABB>& collidingActors, float extendedAmount)
 {
-	// extends collision detection to below actor
-	AABB extendedActor = actor;
-	extendedActor.min.y -= extendedAmount;
-	extendedActor.max.y = actor.min.y;
-	
+	glm::vec2 newPos = glm::vec2(position.x, position.y + (size.y * 0.5f));
+	glm::vec2 newSize = glm::vec2(size.x * 0.75, (size.y * 0.5f));
+
+	AABB extendedActor = AABB::FromPositionSize(newPos, newSize);
+
 	for (const auto& a : collidingActors)
 	{
 		if (aabbOverlap(extendedActor, a))
 		{
+			isGrounded = true;
 			return true;
 		}
 	}
+	isGrounded = false;
 	return false;
 }
 

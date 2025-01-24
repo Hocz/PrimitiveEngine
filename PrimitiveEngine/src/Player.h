@@ -21,15 +21,24 @@ public:
 
 	void BreakBlockAtPos();
 
-
 private:
 
-	glm::vec2 movementDirection;
+	glm::vec2 movementDirection = glm::vec2(0);
 	
 
-	float movementSpeed = 200.f;
-	float jumpStrength = 150.f;
-	float gravity = 50.f;
+	float movementSpeed = 150.0f;
+	float maxMovementSpeeed = 200.0f;
 
-	float velocity;
+	float jumpStrength = 200.0f;
+	float jumpHeight = 1.0f;
+	float jumpTime = 0;
+	float startJump = 0;
+	float jumpDuration = 0.2f;
+	
+	bool isJumping = false;
+
+
+	float gravity = 500.0f;
+
+	bool isGrounded = false;
 };

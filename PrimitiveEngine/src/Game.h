@@ -40,6 +40,7 @@ public:
 
 	void SetRenderColor();
 	void FillRenderRect(int x, int y, int width, int height);
+	void RenderRect(int x, int y, int width, int height);
 
 	Actor* GetCollidingActor(Actor* other, ECollision_Type collisionType);
 	std::vector<Actor*> GetAllCollidingActors(Actor* other, ECollision_Type collisionType);

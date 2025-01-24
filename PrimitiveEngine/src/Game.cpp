@@ -166,6 +166,7 @@ void Game::Render()
     if (player != nullptr)
     {
         player->Render();
+        FillRenderRect(16, -32, 10, 10);
     }
 
     if (worldGenerator->worldGrid != nullptr)
@@ -208,12 +209,21 @@ void Game::FillRenderRect(int x, int y, int width, int height)
     SDL_RenderFillRect(renderer, &rect);
 }
 
+void Game::RenderRect(int x, int y, int width, int height)
+{
+    SDL_SetRenderDrawColor(renderer, 10, 10, 10, 255);
+    SDL_Rect rect = { x, y, width, height };
+    SDL_RenderDrawRect(renderer, &rect);
+}
 
 Actor* Game::GetCollidingActor(Actor* actor, ECollision_Type collisionType)
 {
     for (int i = 0; i < max_Actors; i++)
     {
-        if (actors[i] == actor || actors[i] == nullptr)
+        if (actors[i] == actor)
+            continue;
+
+        if (actors[i] == nullptr)
             continue;
 
         if (actors[i]->collisionType != collisionType)
@@ -234,21 +244,30 @@ Actor* Game::GetCollidingActor(Actor* actor, ECollision_Type collisionType)
 std::vector<Actor*> Game::GetAllCollidingActors(Actor* actor, ECollision_Type collisionType)
 {
     std::vector<Actor*> collidingActors;
+    collidingActors.clear();
 
-    for (int i = 0; i < max_Actors; i++)
+    if (worldGenerator->worldGrid != nullptr)
     {
-        if (actors[i] == actor || actors[i] == nullptr)
-            continue;
-
-        if (actors[i]->collisionType != collisionType)
-            continue;
-
-        AABB a = AABB::FromPositionSize(actor->position, actor->size);
-        AABB b = AABB::FromPositionSize(actors[i]->position, actors[i]->size);
-
-        if (aabbOverlap(a, b))
+        for (int x = 0; x < worldGenerator->WORLD_WIDTH; x++)
         {
-            collidingActors.push_back(actors[i]);
+            for (int y = 0; y < worldGenerator->WORLD_HEIGHT; y++)
+            {
+                Block* block = worldGenerator->worldGrid[x][y];
+
+                if (block == nullptr)
+                    continue;
+
+                if (block->collisionType != collisionType)
+                    continue;
+
+                AABB a = AABB::FromPositionSize(actor->position, actor->size);
+                AABB b = AABB::FromPositionSize(block->position, block->size);
+
+                if (aabbOverlap(a, b))
+                {
+                    collidingActors.push_back(block);
+                }
+            }
         }
     }
 
