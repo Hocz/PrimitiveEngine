@@ -21,6 +21,8 @@ public:
 
 	void BreakBlockAtPos();
 
+	void Use(int i);
+
 private:
 
 	glm::vec2 movementDirection = glm::vec2(0);

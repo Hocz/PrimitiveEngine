@@ -19,7 +19,12 @@ void Player::Update()
 
 	if (InputManager::Instance().MouseButtonPressed(MouseButton::Left))
 	{
-		BreakBlockAtPos();
+		Use(0);
+	}
+
+	if (InputManager::Instance().MouseButtonPressed(MouseButton::Right))
+	{
+		Use(1);
 	}
 
 }
@@ -159,5 +164,34 @@ void Player::BreakBlockAtPos()
 		}
 	}
 
+}
+
+void Player::Use(int i)
+{
+	int mousePosX = InputManager::Instance().MouseX();
+	int mousePosY = InputManager::Instance().MouseY();
+
+	glm::vec2 worldMousePos = Game::Instance().GetCamera()->ScreenToWorld(glm::vec2(mousePosX, mousePosY));
+
+	glm::vec2 blockSize(16);
+
+	glm::vec2 gridPos = glm::floor(worldMousePos / blockSize);
+
+	std::cout << "Mouse is over grid cell: " << (int)gridPos.x << ", " << (int)gridPos.y << std::endl;
+
+	int gridWidth = Game::Instance().GetWorldGenerator()->WORLD_WIDTH;
+	int gridHeight = Game::Instance().GetWorldGenerator()->WORLD_HEIGHT;
+
+	if (gridPos.x >= 0 && gridPos.x <= gridWidth && gridPos.y >= 0 && gridPos.y <= gridHeight)
+	{
+		if (i == 0) // break
+		{
+			Game::Instance().GetWorldGenerator()->DestoryBlockAtPos((int)gridPos.x, (int)gridPos.y);
+		}
+		else if (i == 1) //place
+		{
+			Game::Instance().GetWorldGenerator()->CreateBlockAtPos((int)gridPos.x, (int)gridPos.y);
+		}
+	}
 }
 

@@ -14,6 +14,7 @@ public:
 	void GenerateWorld();
 
 	void DestoryBlockAtPos(int x, int y);
+	void CreateBlockAtPos(int x, int y);
 
 	// world data
 	static constexpr int WORLD_WIDTH = 50;

@@ -23,11 +23,23 @@ void WorldGenerator::GenerateWorld()
 
 void WorldGenerator::DestoryBlockAtPos(int x, int y)
 {
-	if (worldGrid[x][y]->GetIsDestroyed() && worldGrid[x][y] != nullptr)
+	if (worldGrid[x][y] != nullptr && !worldGrid[x][y]->GetIsDestroyed())
 	{
+		worldGrid[x][y]->Destroy();
+
 		delete worldGrid[x][y];
 
 		worldGrid[x][y] = nullptr;
+	}
+}
+
+void WorldGenerator::CreateBlockAtPos(int x, int y)
+{
+	if (worldGrid[x][y] == nullptr)
+	{
+		glm::vec2 position = glm::vec2(x * 16, y * 16);
+
+		worldGrid[x][y] = new Block(position + glm::vec2(8, 8));
 	}
 }
 
