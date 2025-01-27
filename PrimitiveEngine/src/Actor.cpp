@@ -5,9 +5,9 @@
 void Actor::Render()
 {
 	glm::vec2 renderPosition = position - size * 0.5f;
-	renderPosition = game->GetCamera()->WorldToScreen(renderPosition);
+	renderPosition = Game::Instance().GetCamera()->WorldToScreen(renderPosition);
 
-	game->SetRenderColor();
-	game->FillRenderRect(renderPosition.x, renderPosition.y, size.x, size.y);
+	Game::Instance().SetRenderColor();
+	Game::Instance().FillRenderRect(renderPosition.x, renderPosition.y, size.x, size.y);
 }
 

@@ -1,24 +1,20 @@
 #include "Game.h"
 #include "Config.h"
 
-Game* game = nullptr;
-
 int main(int argc, char *argv[])
 {
-    game = new Game();
-
     const char* title = "PrimitiveEngine";
 
-    game->Init(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Config::WINDOWWIDTH, Config::WINDOWHEIGHT, false);
+    Game::Instance().Init(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Config::WINDOWWIDTH, Config::WINDOWHEIGHT, false);
 
-    while (game->Running())
+    while (Game::Instance().Running())
     {
-        game->HandleEvents();
-        game->Update();
-        game->Render();
+        Game::Instance().HandleEvents();
+        Game::Instance().Update();
+        Game::Instance().Render();
     }
 
-    game->Clean();
+    Game::Instance().Clean();
 
     return 0;
 }

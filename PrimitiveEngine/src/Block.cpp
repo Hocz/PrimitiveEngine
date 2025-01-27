@@ -10,9 +10,9 @@ Block::Block(glm::vec2 position)
 
 void Block::Update()
 {
-	if (game->GetPlayer() != nullptr)
+	if (Game::Instance().GetPlayer() != nullptr)
 	{
-		Actor* player = game->GetCollidingActor(this, ECollision_Type::Player);
+		Actor* player = Game::Instance().GetCollidingActor(this, ECollision_Type::Player);
 
 		if (player)
 		{			

@@ -14,18 +14,23 @@ static constexpr int max_Actors = 50;
 class Actor;
 enum class ECollision_Type;
 class Camera;
-class InputManager;
 class WorldGenerator;
 
 class Game {
 
 public:
 
-	Game();
-	~Game();
+	Game(const Game&) = delete;
+	Game& operator=(const Game&) = delete;
+
+	static Game& Instance()
+	{
+		static Game instance;
+		return instance;
+	}
+
 
 	void Init(const char* title, int xPos, int yPos, int width, int height, bool fullscreen);
-
 
 	void HandleEvents();
 
@@ -48,10 +53,12 @@ public:
 	// getter functions
 	Actor* GetPlayer();
 	Camera* GetCamera();
-	InputManager* GetInputManager();
 	WorldGenerator* GetWorldGenerator();
 
 private:
+
+	Game();
+	~Game();
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
@@ -65,15 +72,12 @@ private:
 
 	WorldGenerator* worldGenerator = nullptr;
 
-	InputManager* inputManager = nullptr;
 
 	Actor* player = nullptr;
 
 	Camera* camera = nullptr;
 
 };
-
-extern Game* game;
 
 
 // game time

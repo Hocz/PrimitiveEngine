@@ -19,13 +19,10 @@ static LARGE_INTEGER clockFrequency;
 static LARGE_INTEGER lastFrameTime;
 static LARGE_INTEGER startupTime;
 
-
 Game::Game()
 {
     worldGenerator = new WorldGenerator();
     
-    inputManager = new InputManager();
-
     actors[0] = new Player(glm::vec2(16, -32));
     player = actors[0];
 
@@ -35,8 +32,6 @@ Game::Game()
 
 Game::~Game() // DELETE POINTERS
 {
-    delete inputManager;
-
     delete player;
 
     delete camera;
@@ -96,7 +91,7 @@ void Game::HandleEvents()
         }
     }
     
-    inputManager->HandleEvents(event);
+    InputManager::Instance().HandleEvents(event);
 }
 
 void Game::Update()
@@ -283,11 +278,6 @@ Actor* Game::GetPlayer()
 Camera* Game::GetCamera()
 {
     return camera;
-}
-
-InputManager* Game::GetInputManager()
-{
-    return inputManager;
 }
 
 WorldGenerator* Game::GetWorldGenerator()

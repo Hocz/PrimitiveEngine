@@ -17,7 +17,7 @@ void Player::Update()
 	Player::HandleGravity();
 	Player::HandleJump();
 
-	if (game->GetInputManager()->MouseButtonPressed(MouseButton::Left))
+	if (InputManager::Instance().MouseButtonPressed(MouseButton::Left))
 	{
 		BreakBlockAtPos();
 	}
@@ -37,9 +37,9 @@ void Player::Render()
 	int height = extendedActor.max.y - extendedActor.min.y;
 
 	glm::vec2 renderPosition = newPos - glm::vec2(width, height) * 0.5f;
-	renderPosition = game->GetCamera()->WorldToScreen(renderPosition);
+	renderPosition = Game::Instance().GetCamera()->WorldToScreen(renderPosition);
 
-	game->RenderRect(renderPosition.x, renderPosition.y, width, height);
+	Game::Instance().RenderRect(renderPosition.x, renderPosition.y, width, height);
 }
 
 void Player::Hit(int damage)
@@ -52,12 +52,12 @@ void Player::Hit(int damage)
 void Player::HandleMovement()
 {
 
-	if (game->GetInputManager()->KeyDown(Key::D)) // Right
+	if (InputManager::Instance().KeyDown(Key::D)) // Right
 	{
 		velocity.x += movementSpeed * Get_DeltaTime();
 		velocity.x = glm::clamp(velocity.x, 0.0f, maxMovementSpeeed);
 	}
-	else if (game->GetInputManager()->KeyDown(Key::A)) // Left
+	else if (InputManager::Instance().KeyDown(Key::A)) // Left
 	{
 		velocity.x -= movementSpeed * Get_DeltaTime();
 		velocity.x = glm::clamp(velocity.x, -maxMovementSpeeed, 0.0f);
@@ -75,7 +75,7 @@ void Player::HandleMovement()
 
 void Player::HandleGravity()
 {
-	std::vector<Actor*> collidingActors = game->GetAllCollidingActors(this, ECollision_Type::Block);
+	std::vector<Actor*> collidingActors = Game::Instance().GetAllCollidingActors(this, ECollision_Type::Block);
 	std::vector<AABB> actorsAABB;
 
 	//std::cout << collidingActors.size() << std::endl;
@@ -104,7 +104,7 @@ void Player::HandleGravity()
 
 void Player::HandleJump()
 {	
-	if (game->GetInputManager()->KeyPressed(Key::Space) && isGrounded)
+	if (InputManager::Instance().KeyPressed(Key::Space) && isGrounded)
 	{
 		velocity.y -= jumpStrength;
 	}
@@ -133,10 +133,10 @@ bool Player::IsGrounded(const AABB& actor, const std::vector<AABB>& collidingAct
 
 void Player::BreakBlockAtPos()
 {
-	int mousePosX = game->GetInputManager()->MouseX();
-	int mousePosY = game->GetInputManager()->MouseY();
+	int mousePosX = InputManager::Instance().MouseX();
+	int mousePosY = InputManager::Instance().MouseY();
 
-	glm::vec2 worldMousePos = game->GetCamera()->ScreenToWorld(glm::vec2(mousePosX, mousePosY));
+	glm::vec2 worldMousePos = Game::Instance().GetCamera()->ScreenToWorld(glm::vec2(mousePosX, mousePosY));
 
 	glm::vec2 blockSize(16);
 
@@ -144,17 +144,17 @@ void Player::BreakBlockAtPos()
 
 	std::cout << "Mouse is over grid cell: " << (int)gridPos.x << ", " << (int)gridPos.y << std::endl;
 
-	int gridWidth = game->GetWorldGenerator()->WORLD_WIDTH;
-	int gridHeight = game->GetWorldGenerator()->WORLD_HEIGHT;
+	int gridWidth = Game::Instance().GetWorldGenerator()->WORLD_WIDTH;
+	int gridHeight = Game::Instance().GetWorldGenerator()->WORLD_HEIGHT;
 
 	if (gridPos.x >= 0 && gridPos.x <= gridWidth && gridPos.y >= 0 && gridPos.y <= gridHeight)
 	{
-		if (game->GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y] != nullptr)
+		if (Game::Instance().GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y] != nullptr)
 		{
-			if (!game->GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y]->GetIsDestroyed())
+			if (!Game::Instance().GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y]->GetIsDestroyed())
 			{
-				game->GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y]->Destroy();
-				game->GetWorldGenerator()->DestoryBlockAtPos((int)gridPos.x, (int)gridPos.y);
+				Game::Instance().GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y]->Destroy();
+				Game::Instance().GetWorldGenerator()->DestoryBlockAtPos((int)gridPos.x, (int)gridPos.y);
 			}
 		}
 	}
