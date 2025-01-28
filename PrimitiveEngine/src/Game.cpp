@@ -23,7 +23,7 @@ Game::Game()
 {
     worldGenerator = new WorldGenerator();
     
-    actors[0] = new Player(glm::vec2(16, -32));
+    actors[0] = new Player(glm::vec2(32, -32));
     player = actors[0];
 
 
@@ -158,12 +158,6 @@ void Game::Render()
         }
     }
 
-    if (player != nullptr)
-    {
-        player->Render();
-        FillRenderRect(16, -32, 10, 10);
-    }
-
     if (worldGenerator->worldGrid != nullptr)
     {
         for (int x = 0; x < worldGenerator->WORLD_WIDTH; x++)
@@ -178,7 +172,11 @@ void Game::Render()
         }
     }
 
-    //SDL_RenderCopy(renderer, playerTex, NULL, &destR);
+    if (player != nullptr)
+    {
+        player->Render();
+        FillRenderRect(16, -32, 10, 10);
+    }
 
     SDL_RenderPresent(renderer);
 }

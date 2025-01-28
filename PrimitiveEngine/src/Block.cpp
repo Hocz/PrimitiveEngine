@@ -10,18 +10,7 @@ Block::Block(glm::vec2 position)
 
 void Block::Update()
 {
-	if (Game::Instance().GetPlayer() != nullptr)
-	{
-		Actor* player = Game::Instance().GetCollidingActor(this, ECollision_Type::Player);
-
-		if (player)
-		{			
-			AABB block = AABB::FromPositionSize(this->position, this->size);
-
-			ResolveCollision(player, block);
-
-		}
-	}
+	
 }
 
 void Block::Render()
@@ -34,55 +23,4 @@ void Block::Hit(int damage)
 	// health check
 
 	Destroy();
-}
-
-bool Block::IsColliding(const AABB& a, const AABB& b, glm::vec2& outOverlap)
-{
-	float overlapX = glm::min(a.max.x - b.min.x, b.max.x - a.min.x);
-	float overlapY = glm::min(a.max.y - b.min.y, b.max.y - a.min.y);
-
-	if (overlapX > 0 && overlapY > 0)
-	{
-		outOverlap = glm::vec2(overlapX, overlapY);
-		return true;
-	}
-
-	return false;
-}
-
-void Block::ResolveCollision(Actor* actor, const AABB& other)
-{
-	glm::vec2 overlap;
-
-	AABB a = AABB::FromPositionSize(actor->position, actor->size);
-	
-	if (!IsColliding(a, other, overlap))
-	{
-		return;
-	}
-
-	if (overlap.x < overlap.y) // checks smallest axis overlap - x or y?
-	{
-		if (actor->position.x < other.min.x)
-		{
-			actor->position.x -= overlap.x; // adjust position left
-		}
-		else
-		{
-			actor->position.x += overlap.x; // adjust position right
-		}
-		actor->velocity.x = 0;
-	}
-	else
-	{
-		if (actor->position.y < other.min.y)
-		{
-			actor->position.y -= overlap.y; // adjust position down
-		}
-		else
-		{
-			actor->position.y += overlap.y; // adjust position up
-		}
-		actor->velocity.y = 0;
-	}
 }

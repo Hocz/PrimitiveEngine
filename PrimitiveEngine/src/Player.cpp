@@ -13,9 +13,20 @@ Player::Player(glm::vec2 position)
 
 void Player::Update()
 {
-	Player::HandleMovement();
-	Player::HandleGravity();
-	Player::HandleJump();
+	HandleMovement();
+	HandleGravity();
+	HandleJump();
+
+	std::vector<Actor*> collidingActors = Game::Instance().GetAllCollidingActors(this, ECollision_Type::Block);
+	std::vector<AABB> actorsAABB;
+
+	for (Actor* a : collidingActors)
+	{
+		AABB aabb = AABB::FromPositionSize(a->position, a->size);
+		actorsAABB.push_back(aabb);
+	}
+	ResolveCollision(this, actorsAABB);
+
 
 	if (InputManager::Instance().MouseButtonPressed(MouseButton::Left))
 	{
@@ -83,8 +94,6 @@ void Player::HandleGravity()
 	std::vector<Actor*> collidingActors = Game::Instance().GetAllCollidingActors(this, ECollision_Type::Block);
 	std::vector<AABB> actorsAABB;
 
-	//std::cout << collidingActors.size() << std::endl;
-
 	AABB player = AABB::FromPositionSize(this->position, this->size);
 
 	for (Actor* a : collidingActors)
@@ -136,35 +145,72 @@ bool Player::IsGrounded(const AABB& actor, const std::vector<AABB>& collidingAct
 	return false;
 }
 
-void Player::BreakBlockAtPos()
+bool Player::IsColliding(const AABB& a, const AABB& b, glm::vec2& outOverlap)
 {
-	int mousePosX = InputManager::Instance().MouseX();
-	int mousePosY = InputManager::Instance().MouseY();
+	float overlapX = glm::min(a.max.x - b.min.x, b.max.x - a.min.x);
+	float overlapY = glm::min(a.max.y - b.min.y, b.max.y - a.min.y);
 
-	glm::vec2 worldMousePos = Game::Instance().GetCamera()->ScreenToWorld(glm::vec2(mousePosX, mousePosY));
-
-	glm::vec2 blockSize(16);
-
-	glm::vec2 gridPos = glm::floor(worldMousePos / blockSize);
-
-	std::cout << "Mouse is over grid cell: " << (int)gridPos.x << ", " << (int)gridPos.y << std::endl;
-
-	int gridWidth = Game::Instance().GetWorldGenerator()->WORLD_WIDTH;
-	int gridHeight = Game::Instance().GetWorldGenerator()->WORLD_HEIGHT;
-
-	if (gridPos.x >= 0 && gridPos.x <= gridWidth && gridPos.y >= 0 && gridPos.y <= gridHeight)
+	if (overlapX > 0 && overlapY > 0)
 	{
-		if (Game::Instance().GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y] != nullptr)
+		outOverlap = glm::vec2(overlapX, overlapY);
+		return true;
+	}
+	return false;
+}
+
+void Player::ResolveCollision(Actor* actor, const std::vector<AABB>& collidingActors)
+{
+	glm::vec2 overlap;
+
+	AABB a = AABB::FromPositionSize(actor->position, actor->size);
+
+	for (const auto& cA : collidingActors)
+	{
+		if (!IsColliding(a, cA, overlap))
 		{
-			if (!Game::Instance().GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y]->GetIsDestroyed())
+			continue;
+		}
+
+		float overlapArea = 0.0f;
+
+		float overlapX = glm::max(0.0f, glm::min(a.max.x, cA.max.x) - glm::max(a.min.x, cA.min.x));
+		float overlapY = glm::max(0.0f, glm::min(a.max.y, cA.max.y) - glm::max(a.min.y, cA.min.y));
+		overlapArea = overlapX * overlapY;
+
+		if (overlapArea > ((actor->size.x * actor->size.y) * 0.5f))
+		{
+			actor->velocity = glm::vec2(0);
+			return;
+		}
+
+
+		if (overlap.x < overlap.y) // checks smallest axis overlap - x or y?
+		{
+			if (actor->position.x < cA.min.x)
 			{
-				Game::Instance().GetWorldGenerator()->worldGrid[(int)gridPos.x][(int)gridPos.y]->Destroy();
-				Game::Instance().GetWorldGenerator()->DestoryBlockAtPos((int)gridPos.x, (int)gridPos.y);
+				actor->position.x -= overlap.x; // adjust position left
 			}
+			else
+			{
+				actor->position.x += overlap.x; // adjust position right
+			}
+			actor->velocity.x = 0;
+		}
+		else
+		{
+			if (actor->position.y < cA.min.y)
+			{
+				actor->position.y -= overlap.y; // adjust position down
+			}
+			else
+			{
+				actor->position.y += overlap.y; // adjust position up
+			}
+			actor->velocity.y = 0;
 		}
 	}
-
 }
+
 
 void Player::Use(int i)
 {
