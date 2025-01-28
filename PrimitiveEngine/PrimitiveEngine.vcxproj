@@ -139,6 +139,7 @@
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\WorldGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
