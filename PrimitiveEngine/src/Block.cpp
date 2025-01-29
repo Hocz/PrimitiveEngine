@@ -1,6 +1,7 @@
 #include "Block.h"
 #include "Game.h"
 #include "Player.h"
+#include "TextureManager.h"
 
 Block::Block(glm::vec2 position) 
 	: Actor(position, glm::vec2(16))
@@ -16,6 +17,9 @@ void Block::Update()
 void Block::Render()
 {
 	Actor::Render();
+
+	TextureManager::Instance().Render("block_dirt", renderPosition.x, renderPosition.y, size.x, size.y, Game::Instance().GetRenderer());
+
 }
 
 void Block::Hit(int damage)

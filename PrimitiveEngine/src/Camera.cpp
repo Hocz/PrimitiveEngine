@@ -9,11 +9,14 @@ void Camera::Update()
 	if (Game::Instance().GetPlayer() != nullptr)
 	{
 		glm::vec2 playerPosition = Game::Instance().GetPlayer()->position;
-		glm::vec2 mousePosition = ScreenToWorld(glm::vec2(InputManager::Instance().MouseX(), InputManager::Instance().MouseY()));
 
-		glm::vec2 targetPosition = glm::mix(playerPosition, mousePosition, 0.0f);
+		position = playerPosition;
 
-		position = glm::mix(position, targetPosition, CAMERASPEED * Get_DeltaTime());
+		//glm::vec2 mousePosition = ScreenToWorld(glm::vec2(InputManager::Instance().MouseX(), InputManager::Instance().MouseY()));
+
+		//glm::vec2 targetPosition = glm::mix(playerPosition, mousePosition, 0.0f);
+
+		//position = glm::mix(position, targetPosition, CAMERASPEED * Get_DeltaTime());
 	}
 }
 

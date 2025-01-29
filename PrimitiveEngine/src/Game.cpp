@@ -7,8 +7,6 @@
 #include "AABB.h"
 #include "TextureManager.h"
 
-SDL_Texture* playerTexture;
-
 static float deltaTime = 0.f;
 static unsigned int frameCount = 0;
 
@@ -75,7 +73,8 @@ void Game::Init(const char* title, int xPos, int yPos, int width, int height, bo
         isRunning = false;
     }
 
-    //playerTexture = TextureManager::Instance().LoadTexture("Textures/player.png", renderer);
+    TextureManager::Instance().Load("player", "Textures/player.png", renderer);
+    TextureManager::Instance().Load("block_dirt", "Textures/block_dirt.png", renderer);
 }
 
 void Game::HandleEvents()
@@ -173,12 +172,6 @@ void Game::Render()
     if (player != nullptr)
     {
         player->Render();
-        FillRenderRect(16, -32, 10, 10);
-
-        /*SDL_Rect srcRect;
-        SDL_Rect destRect { 394, 294, player->size.x, player->size.y};
-
-        SDL_RenderCopy(renderer, playerTexture, NULL, &destRect);*/
     }
 
     SDL_RenderPresent(renderer);
@@ -186,6 +179,8 @@ void Game::Render()
 
 void Game::Clean()
 {
+    TextureManager::Instance().Clean();
+
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
@@ -268,6 +263,11 @@ std::vector<Actor*> Game::GetAllCollidingActors(Actor* actor, ECollision_Type co
     }
 
     return collidingActors;
+}
+
+SDL_Renderer* Game::GetRenderer()
+{
+    return renderer;
 }
 
 

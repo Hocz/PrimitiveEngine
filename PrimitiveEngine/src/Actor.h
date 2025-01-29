@@ -32,6 +32,8 @@ public:
 	glm::vec2 position;
 	glm::vec2 size = glm::vec2(32);
 
+	glm::vec2 renderPosition;
+
 	ECollision_Type collisionType = ECollision_Type::None;
 
 	glm::vec2 velocity = glm::vec2(0);

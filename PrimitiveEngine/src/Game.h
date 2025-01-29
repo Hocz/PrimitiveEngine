@@ -50,6 +50,8 @@ public:
 	Actor* GetCollidingActor(Actor* other, ECollision_Type collisionType);
 	std::vector<Actor*> GetAllCollidingActors(Actor* other, ECollision_Type collisionType);
 
+	SDL_Renderer* GetRenderer();
+
 	// getter functions
 	Actor* GetPlayer();
 	Camera* GetCamera();

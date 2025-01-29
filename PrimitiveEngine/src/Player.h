@@ -38,8 +38,6 @@ private:
 	float startJump = 0;
 	float jumpDuration = 0.2f;
 	
-	bool isJumping = false;
-
 
 	float gravity = 500.0f;
 

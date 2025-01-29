@@ -4,19 +4,16 @@
 #include "InputManager.h"
 #include "Camera.h"
 #include "WorldGenerator.h"
+#include "TextureManager.h"
 
 Player::Player(glm::vec2 position)
-	: Actor(position, glm::vec2(12))
+	: Actor(position, glm::vec2(24, 40))
 {
 	collisionType = ECollision_Type::Player;
 }
 
 void Player::Update()
 {
-	HandleMovement();
-	HandleGravity();
-	HandleJump();
-
 	std::vector<Actor*> collidingActors = Game::Instance().GetAllCollidingActors(this, ECollision_Type::Block);
 	std::vector<AABB> actorsAABB;
 
@@ -26,6 +23,11 @@ void Player::Update()
 		actorsAABB.push_back(aabb);
 	}
 	ResolveCollision(this, actorsAABB);
+
+
+	HandleMovement();
+	HandleJump();
+	HandleGravity();
 
 
 	if (InputManager::Instance().MouseButtonPressed(MouseButton::Left))
@@ -44,8 +46,11 @@ void Player::Render()
 {
 	Actor::Render();
 
+	TextureManager::Instance().Render("player", renderPosition.x, renderPosition.y, size.x, size.y, Game::Instance().GetRenderer());
+
+
 	glm::vec2 newPos = glm::vec2(position.x, position.y + (size.y * 0.5f));
-	glm::vec2 newSize = glm::vec2(size.x * 0.75, size.y * 0.5f);
+	glm::vec2 newSize = glm::vec2(size.x * 0.75, size.y * 0.25f);
 
 	AABB extendedActor = AABB::FromPositionSize(newPos, newSize);
 
@@ -110,7 +115,6 @@ void Player::HandleGravity()
 	{
 		velocity.y = 0;
 		isGrounded = true;
-		isJumping = false;
 	}
 
 	movementDirection.y = velocity.y;
@@ -129,7 +133,7 @@ void Player::HandleJump()
 bool Player::IsGrounded(const AABB& actor, const std::vector<AABB>& collidingActors, float extendedAmount)
 {
 	glm::vec2 newPos = glm::vec2(position.x, position.y + (size.y * 0.5f));
-	glm::vec2 newSize = glm::vec2(size.x * 0.75, (size.y * 0.5f));
+	glm::vec2 newSize = glm::vec2(size.x * 0.75, (size.y * 0.25f));
 
 	AABB extendedActor = AABB::FromPositionSize(newPos, newSize);
 
@@ -141,6 +145,7 @@ bool Player::IsGrounded(const AABB& actor, const std::vector<AABB>& collidingAct
 			return true;
 		}
 	}
+
 	isGrounded = false;
 	return false;
 }
@@ -177,7 +182,7 @@ void Player::ResolveCollision(Actor* actor, const std::vector<AABB>& collidingAc
 		float overlapY = glm::max(0.0f, glm::min(a.max.y, cA.max.y) - glm::max(a.min.y, cA.min.y));
 		overlapArea = overlapX * overlapY;
 
-		if (overlapArea > ((actor->size.x * actor->size.y) * 0.5f))
+		if (overlapArea > ((actor->size.x * actor->size.y) * 0.25f))
 		{
 			actor->velocity = glm::vec2(0);
 			return;
