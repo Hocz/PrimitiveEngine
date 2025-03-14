@@ -30,7 +30,7 @@ public:
 	bool GetIsDestroyed() { return isDestroyed; }
 
 	glm::vec2 position;
-	glm::vec2 size = glm::vec2(32);
+	glm::vec2 size = glm::vec2(16);
 
 	glm::vec2 renderPosition;
 

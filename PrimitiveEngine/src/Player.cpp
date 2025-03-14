@@ -7,7 +7,7 @@
 #include "TextureManager.h"
 
 Player::Player(glm::vec2 position)
-	: Actor(position, glm::vec2(24, 40))
+	: Actor(position, glm::vec2(12, 20))
 {
 	collisionType = ECollision_Type::Player;
 }
@@ -46,7 +46,7 @@ void Player::Render()
 {
 	Actor::Render();
 
-	TextureManager::Instance().Render("player", renderPosition.x, renderPosition.y, size.x, size.y, Game::Instance().GetRenderer());
+	TextureManager::Instance().Render("player", renderPosition.x, renderPosition.y, size.x, size.y, Game::Instance().GetRenderer(), Game::Instance().GetCamera()->zoom);
 
 
 	glm::vec2 newPos = glm::vec2(position.x, position.y + (size.y * 0.5f));
@@ -224,7 +224,7 @@ void Player::Use(int i)
 
 	glm::vec2 worldMousePos = Game::Instance().GetCamera()->ScreenToWorld(glm::vec2(mousePosX, mousePosY));
 
-	glm::vec2 blockSize(16);
+	glm::vec2 blockSize(8);
 
 	glm::vec2 gridPos = glm::floor(worldMousePos / blockSize);
 

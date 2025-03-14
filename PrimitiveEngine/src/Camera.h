@@ -14,4 +14,6 @@ public:
 
 	glm::vec2 position;
 	
+	float zoom = 2.0f;
+
 };

@@ -14,9 +14,9 @@ void WorldGenerator::GenerateWorld()
 	{
 		for (int y = 0; y < WORLD_HEIGHT; y++)
 		{
-			glm::vec2 position = glm::vec2(x * 16, y * 16);
+			glm::vec2 position = glm::vec2(x * 8, y * 8);
 
-			worldGrid[x][y] = new Block(position + glm::vec2(8, 8));
+			worldGrid[x][y] = new Block(position + glm::vec2(4, 4));
 		}
 	}
 }
@@ -37,9 +37,9 @@ void WorldGenerator::CreateBlockAtPos(int x, int y)
 {
 	if (worldGrid[x][y] == nullptr)
 	{
-		glm::vec2 position = glm::vec2(x * 16, y * 16);
+		glm::vec2 position = glm::vec2(x * 8, y * 8);
 
-		worldGrid[x][y] = new Block(position + glm::vec2(8, 8));
+		worldGrid[x][y] = new Block(position + glm::vec2(4, 4));
 	}
 }
 

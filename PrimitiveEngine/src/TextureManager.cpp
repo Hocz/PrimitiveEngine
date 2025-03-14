@@ -32,8 +32,11 @@ bool TextureManager::Load(const std::string& id, const std::string fileName, SDL
 	return true;
 }
 
-void TextureManager::Render(const std::string& id, int x, int y, int width, int height, SDL_Renderer* renderer)
+void TextureManager::Render(const std::string& id, int x, int y, int width, int height, SDL_Renderer* renderer, float zoom)
 {
+	width = static_cast<int>(width * zoom);
+	height = static_cast<int>(height * zoom);
+
 	SDL_Rect srcRect = { 0, 0, width, height };
 	SDL_Rect destRect = { x, y, width, height };
 

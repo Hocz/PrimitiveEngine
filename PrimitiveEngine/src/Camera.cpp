@@ -23,11 +23,17 @@ void Camera::Update()
 glm::vec2 Camera::WorldToScreen(glm::vec2 vector)
 {
 	using namespace Config;
-	return vector - position + glm::vec2(WINDOWWIDTH * 0.5f, WINDOWHEIGHT * 0.5f);
+
+	glm::vec2 scaledVector = (vector - position) * zoom;
+
+	return scaledVector + glm::vec2(WINDOWWIDTH * 0.5f, WINDOWHEIGHT * 0.5f);
 }
 
 glm::vec2 Camera::ScreenToWorld(glm::vec2 vector)
 {
 	using namespace Config;
-	return vector + position - glm::vec2(WINDOWWIDTH * 0.5f, WINDOWHEIGHT * 0.5f);
+
+	glm::vec2 unscaledVector = (vector - glm::vec2(WINDOWWIDTH * 0.5f, WINDOWHEIGHT * 0.5f)) / zoom;
+
+	return unscaledVector + position;
 }
