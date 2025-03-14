@@ -105,7 +105,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)\PrimitiveEngine\Dependencies\glm;$(SolutionDir)\PrimitiveEngine\Dependencies\SDL2_Image\include;$(SolutionDir)\PrimitiveEngine\Dependencies\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\PrimitiveEngine\Dependencies\FastNoise\Include;$(SolutionDir)\PrimitiveEngine\Dependencies\glm;$(SolutionDir)\PrimitiveEngine\Dependencies\SDL2_Image\include;$(SolutionDir)\PrimitiveEngine\Dependencies\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
