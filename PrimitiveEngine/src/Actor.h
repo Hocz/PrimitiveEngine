@@ -21,7 +21,7 @@ public:
 
 	virtual ~Actor() { }
 
-	virtual void Update() {}
+	virtual void Update();
 	virtual void Render();
 
 	virtual void Hit(int damage) { Destroy(); }
@@ -41,6 +41,8 @@ public:
 
 	virtual bool IsColliding(const AABB& a, const AABB& b, glm::vec2& outOverlap) { return false; }
 	virtual void ResolveCollision(Actor* actor, const std::vector<AABB>& collidingActors) { }
+
+	virtual void ResolveCollision(Actor* actor, float otherMass, glm::vec2 otherVelocity);
 
 	virtual bool IsGrounded(const AABB& actor, const std::vector<AABB>& collidingActors, float extendedAmount) { return false; }
 
